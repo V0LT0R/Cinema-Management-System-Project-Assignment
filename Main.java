@@ -1,34 +1,18 @@
-class CinemaBookingUI {
-
-    private Button button;
-    private TextField textField;
-    private Checkbox checkbox;
-
-    public CinemaBookingUI(UIFactory factory) {
-        this.button = factory.createButton();
-        this.textField = factory.createTextField();
-        this.checkbox = factory.createCheckbox();
-    }
-
-    public void render() {
-        button.render();
-        textField.render();
-        checkbox.render();
-    }
-}
-
 public class Main {
     public static void main(String[] args) {
-        // Using Dark Theme
-        UIFactory darkThemeFactory = new DarkThemeFactory();
-        CinemaBookingUI darkThemeUI = new CinemaBookingUI(darkThemeFactory);
-        darkThemeUI.render();
+        TicketBooking basicBooking = new TicketBooking.TicketBookingBuilder("Inception", "B12")
+                .build();
+        System.out.println(basicBooking);
 
-        System.out.println();
+        TicketBooking snackBooking = new TicketBooking.TicketBookingBuilder("Avatar", "A15")
+                .setSnackCombo("Popcorn and Soda")
+                .build();
+        System.out.println(snackBooking);
 
-        // Using Light Theme
-        UIFactory lightThemeFactory = new LightThemeFactory();
-        CinemaBookingUI lightThemeUI = new CinemaBookingUI(lightThemeFactory);
-        lightThemeUI.render();
+        TicketBooking fullBooking = new TicketBooking.TicketBookingBuilder("Interstellar", "C5")
+                .setSnackCombo("Nachos and Soda")
+                .setSpecialScreening("IMAX")
+                .build();
+        System.out.println(fullBooking);
     }
 }
