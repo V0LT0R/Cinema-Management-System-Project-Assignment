@@ -11,9 +11,20 @@ The **Singleton Pattern** is used to implement the `CinemaConfig` class that man
 
 ### Usage:
 ```java
-CinemaConfig config = CinemaConfig.getInstance();
-config.setCinemaName("Cineplex");
-config.setNumberOfScreens(5);
+public class Main {
+    public static void main(String[] args) {
+        CinemaConfig config = CinemaConfig.getInstance();
+
+        config.setCinemaName("Chaplin Cinema");
+        config.setNumberOfScreens(10);
+        config.setOperatingHours("8:00 AM - 12:00 PM");
+
+        System.out.println(config);
+
+        CinemaConfig anotherConfigReference = CinemaConfig.getInstance();
+        System.out.println(anotherConfigReference); 
+    }
+}
 ```
 
 ---
@@ -27,11 +38,22 @@ The **Factory Method Pattern** is used to design a movie management system that 
 
 ### Usage:
 ```java
-MovieFactory movieFactory = new RegularMovieFactory();
-Movie regularMovie = movieFactory.createMovie();
+public class Main {
+    public static void main(String[] args) {
+        MovieFactory regularFactory = new RegularMovieFactory();
+        Movie regularMovie = regularFactory.createMovie("Inception", 148);
+        regularMovie.displayInfo();
 
-MovieFactory imaxFactory = new IMAXMovieFactory();
-Movie imaxMovie = imaxFactory.createMovie();
+        MovieFactory threeDFactory = new ThreeDMovieFactory();
+        Movie threeDMovie = threeDFactory.createMovie("Avatar", 162);
+        threeDMovie.displayInfo();
+
+        MovieFactory imaxFactory = new IMAXMovieFactory();
+        Movie imaxMovie = imaxFactory.createMovie("Interstellar", 169);
+        imaxMovie.displayInfo();
+    }
+}
+
 ```
 
 ---
@@ -45,13 +67,41 @@ The **Abstract Factory Pattern** is used to create a flexible UI generation syst
 
 ### Usage:
 ```java
-UIFactory darkThemeFactory = new DarkThemeFactory();
-Button darkButton = darkThemeFactory.createButton();
-darkButton.render();
+public class CinemaBookingUI {
 
-UIFactory lightThemeFactory = new LightThemeFactory();
-TextField lightTextField = lightThemeFactory.createTextField();
-lightTextField.render();
+    private Button button;
+    private TextField textField;
+    private Checkbox checkbox;
+
+    // Constructor to initialize UI components based on the theme factory
+    public CinemaBookingUI(UIFactory factory) {
+        this.button = factory.createButton();
+        this.textField = factory.createTextField();
+        this.checkbox = factory.createCheckbox();
+    }
+
+    // Render the UI
+    public void render() {
+        button.render();
+        textField.render();
+        checkbox.render();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) { 
+        UIFactory darkThemeFactory = new DarkThemeFactory();
+        CinemaBookingUI darkThemeUI = new CinemaBookingUI(darkThemeFactory);
+        darkThemeUI.render();
+
+        System.out.println();
+ 
+        UIFactory lightThemeFactory = new LightThemeFactory();
+        CinemaBookingUI lightThemeUI = new CinemaBookingUI(lightThemeFactory);
+        lightThemeUI.render();
+    }
+}
+
 ```
 
 ---
@@ -65,10 +115,25 @@ The **Builder Pattern** is used to implement the complex ticket booking system, 
 
 ### Usage:
 ```java
-TicketBooking booking = new TicketBooking.TicketBookingBuilder("Interstellar", "A12")
-                            .setSnackCombo("Popcorn and Soda")
-                            .setSpecialScreening("IMAX")
-                            .build();
+public class Main {
+    public static void main(String[] args) { 
+        TicketBooking basicBooking = new TicketBooking.TicketBookingBuilder("Inception", "B12")
+                                            .build();
+        System.out.println(basicBooking);
+ 
+        TicketBooking snackBooking = new TicketBooking.TicketBookingBuilder("Avatar", "A15")
+                                            .setSnackCombo("Popcorn and Soda")
+                                            .build();
+        System.out.println(snackBooking);
+ 
+        TicketBooking fullBooking = new TicketBooking.TicketBookingBuilder("Interstellar", "C5")
+                                            .setSnackCombo("Nachos and Soda")
+                                            .setSpecialScreening("IMAX")
+                                            .build();
+        System.out.println(fullBooking);
+    }
+}
+
 ```
 
 ---
@@ -82,9 +147,28 @@ The **Prototype Pattern** is used for managing movie schedules. This allows the 
 
 ### Usage:
 ```java
-MovieSchedule originalSchedule = new MovieSchedule("Inception", new Date(), "18:00");
-MovieSchedule clonedSchedule = originalSchedule.clone();
-clonedSchedule.setScreeningTime("20:00");
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Main {
+    public static void main(String[] args) throws Exception { 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        MovieSchedule originalSchedule = new MovieSchedule("Inception", dateFormat.parse("10-10-2024"), "18:00");
+ 
+        System.out.println("Original Schedule: " + originalSchedule);
+ 
+        MovieSchedule clonedSchedule1 = originalSchedule.clone();
+        clonedSchedule1.setScreeningTime("20:00");
+        System.out.println("Cloned Schedule with modified time: " + clonedSchedule1);
+ 
+        MovieSchedule clonedSchedule2 = originalSchedule.clone();
+        clonedSchedule2.setScreeningDate(dateFormat.parse("12-10-2024"));
+        System.out.println("Cloned Schedule with modified date: " + clonedSchedule2);
+ 
+        System.out.println("Original Schedule remains unchanged: " + originalSchedule);
+    }
+}
+
 ```
 
 ---
