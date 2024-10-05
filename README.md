@@ -105,3 +105,4 @@ Each design pattern implementation has its corresponding `Main` class for testin
 
 ## Author
 This project was developed to demonstrate the implementation of various **Design Patterns** in Java for a cinema management system.
+Created by Biloshchytskyi Yevhenii
