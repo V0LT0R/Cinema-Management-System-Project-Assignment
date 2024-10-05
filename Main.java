@@ -1,14 +1,15 @@
 public class Main {
     public static void main(String[] args) {
-        CinemaConfig config = CinemaConfig.getInstance();
+        MovieFactory regularFactory = new RegularMovieFactory();
+        Movie regularMovie = regularFactory.createMovie("Inception", 148);
+        regularMovie.displayInfo();
 
-        config.setCinemaName("Chaplin Cinema");
-        config.setNumberOfScreens(10);
-        config.setOperatingHours("9:00 AM - 12:00 PM");
+        MovieFactory threeDFactory = new ThreeDMovieFactory();
+        Movie threeDMovie = threeDFactory.createMovie("Avatar", 162);
+        threeDMovie.displayInfo();
 
-        System.out.println(config);
-
-        CinemaConfig anotherConfigReference = CinemaConfig.getInstance();
-        System.out.println(anotherConfigReference);
+        MovieFactory imaxFactory = new IMAXMovieFactory();
+        Movie imaxMovie = imaxFactory.createMovie("Interstellar", 169);
+        imaxMovie.displayInfo();
     }
 }
