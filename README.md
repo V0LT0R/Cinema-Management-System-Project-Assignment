@@ -67,7 +67,7 @@ The **Abstract Factory Pattern** is used to create a flexible UI generation syst
 
 ### Usage:
 ```java
-public class CinemaBookingUI {
+class CinemaBookingUI {
 
     private Button button;
     private TextField textField;
