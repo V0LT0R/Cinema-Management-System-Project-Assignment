@@ -1,18 +1,21 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Main {
-    public static void main(String[] args) {
-        TicketBooking basicBooking = new TicketBooking.TicketBookingBuilder("Inception", "B12")
-                .build();
-        System.out.println(basicBooking);
+    public static void main(String[] args) throws Exception {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        MovieSchedule originalSchedule = new MovieSchedule("Inception", dateFormat.parse("10-10-2024"), "18:00");
 
-        TicketBooking snackBooking = new TicketBooking.TicketBookingBuilder("Avatar", "A15")
-                .setSnackCombo("Popcorn and Soda")
-                .build();
-        System.out.println(snackBooking);
+        System.out.println("Original Schedule: " + originalSchedule);
 
-        TicketBooking fullBooking = new TicketBooking.TicketBookingBuilder("Interstellar", "C5")
-                .setSnackCombo("Nachos and Soda")
-                .setSpecialScreening("IMAX")
-                .build();
-        System.out.println(fullBooking);
+        MovieSchedule clonedSchedule1 = originalSchedule.clone();
+        clonedSchedule1.setScreeningTime("20:00");
+        System.out.println("Cloned Schedule with modified time: " + clonedSchedule1);
+
+        MovieSchedule clonedSchedule2 = originalSchedule.clone();
+        clonedSchedule2.setScreeningDate(dateFormat.parse("12-10-2024"));
+        System.out.println("Cloned Schedule with modified date: " + clonedSchedule2);
+
+        System.out.println("Original Schedule remains unchanged: " + originalSchedule);
     }
 }
